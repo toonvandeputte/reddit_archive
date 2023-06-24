@@ -97,12 +97,15 @@ def download_gallery(url,dir):
 	for i in galobj:
 		for c in i['data']['children']:
 			if 'is_gallery' in c['data'] and True == c['data']['is_gallery']:
-				if c['data']['gallery_data']:
-					imgs = c['data']['gallery_data']['items']
-					for i in imgs:
-						imgurl = f"https://i.redd.it/{i['media_id']}.jpg"
-						maybe_download_file(imgurl,galdir)
+				imgs = []
+				if 'media_metadata' in c['data'] and c['data']['media_metadata'] != None:
+					for k, v in c['data']['media_metadata'].items():
+						imgs.append([k,v['m']])
 
+				for i in imgs:
+					ext = i[1].split('/')[1]
+					imgurl = f"https://i.redd.it/{i[0]}.{ext}"
+					maybe_download_file(imgurl,galdir)
 
 def run():
 	walk_dir('output')

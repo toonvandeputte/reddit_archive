@@ -119,8 +119,5 @@ def run():
 	fetch_saved()
 	fetch_submissions()
 
-	# print(self_texts)
-
-
 if '__main__' == __name__:
 	run()
